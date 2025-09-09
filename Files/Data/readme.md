@@ -1,0 +1,13 @@
+# Descrição da pasta
+
+- Nessa pasta devem estar os arquivos:
+
+```text
+Data
+├── hackathon_2025_templates
+│   ├── part-00000-tid-2779033056155408584-f6316110-4c9a-4061-ae48-69b77c7c8c36-4-1-c000.snappy.parquet
+│   ├── part-00000-tid-5196563791502273604-c90d3a24-52f2-4955-b4ec-fb143aae74d8-4-1-c000.snappy.parquet
+│   └── part-00000-tid-6364321654468257203-dc13a5d6-36ae-48c6-a018-37d8cfe34cf6-263-1-c000.snappy.parquet
+├── hackathon_2025_templates.zip
+└── readme.md
+```

@@ -1,7 +1,8 @@
 # Descrição dos Dados
 
-## tid-2779033056155408584-f6316110-4c9a-4061-ae48-69b77c7c8c36-4
+## Índice das lojas
 
+- file_name: tid-2779033056155408584-f6316110-4c9a-4061-ae48-69b77c7c8c36-4
 - Size: 14,419 rows, 5 columns
 - Weight: 394.4+ KB
 
@@ -10,10 +11,10 @@
 | #             | int           | Index                       | 0 - 14418                                |                 |
 | PDV           | int           | Ponto De Venda              | 1000237487041964405 - 997907800111849739 | 100% distintos  |
 | Premise       | string/Object | ?                           | On Premise, Off Premise                  | 57% on, 43% off |
-| categoria_pdv | string/Object | Categoria do Ponto De Venda | \*                                       | 54 distintos    |
+| categoria_pdv | string/Object | Categoria do Ponto De Venda | [Lista de Valores]                       | 54 distintos    |
 | zipcode       | int           | CEP? Falta Número?          | 8107 - 90920                             | 788 distintos   |
 
-- \*
+- [Lista de Valores]
   1. Adult Entertainment
   2. Airline/Airport
   3. All Other N/A Off Premise
@@ -69,8 +70,9 @@
   53. Theme Park
   54. Winery
 
-## tid-5196563791502273604-c90d3a24-52f2-4955-b4ec-fb143aae74d8-4
+## Transações
 
+file_name: tid-5196563791502273604-c90d3a24-52f2-4955-b4ec-fb143aae74d8-4
 Size: 6,560,698 rows, 11 columns
 Weight: 550.6+ MB
 
@@ -89,4 +91,12 @@ Weight: 550.6+ MB
 | discount            | float64       | Desconto                      | -13096.7998046875 - 240082.96562814713   | 121528 distintos                       |
 | taxes               | float64       | Taxas                         | -4099.40869140625 - 2073.237548828125    | 12531 distintos                        |
 
-## tid-6364321654468257203-dc13a5d6-36ae-48c6-a018-37d8cfe34cf6-263
+## ?
+
+file_name: tid-6364321654468257203-dc13a5d6-36ae-48c6-a018-37d8cfe34cf6-263
+Size: ? rows, ? columns
+Weight: ?+ MB
+
+| Column Name | Type | Description | Range/Values | Observations |
+| ----------- | ---- | ----------- | ------------ | ------------ |
+|             |      |             |              |              |

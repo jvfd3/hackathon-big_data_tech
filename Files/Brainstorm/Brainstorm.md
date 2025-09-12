@@ -1,6 +1,5 @@
 # Brainstorm de Ideias
 
-
 ## Diagrama resumido
 
 ![Diagrama do banco de dados](diagrama.png)
@@ -11,18 +10,18 @@
 
 - **Premise:** Entender do que se trata.
 
-- **categoria_pdv:** Avaliar viabilidade de *One-hot encoding*
+- **categoria_pdv:** Avaliar viabilidade de _One-hot encoding_
 
-- **zipcode:** 
-    - Verificar se faz sentido fornecer mais informações de cada zip code (caso sejam zip codes válidos) para aumentar o número de informações disponíveis para treino
-    - Se fizer sentido, avaliar como extrair essas informações da internet e incorporá-las nos dados
-
+- **zipcode:**
+  - Verificar se faz sentido fornecer mais informações de cada zip code (caso sejam zip codes válidos) para aumentar o número de informações disponíveis para treino
+  - Se fizer sentido, avaliar como extrair essas informações da internet e incorporá-las nos dados
 
 ## Segundo arquivo (tid-5196563791502273604-c90d3a24-52f2-4955-b4ec-fb143aae74d8-4)
 
-- **internal_store_id:** 
-    - Avaliar a correlação com o primeiro arquivo. Há índices distintos, o que pode implicar em removê-los do treino ou simplesmente ignorá-los.
-    - Tentar "enxugar" os IDs conforme **PDV** do primeiro arquivo.
+- **internal_store_id:**
+
+  - Avaliar a correlação com o primeiro arquivo. Há índices distintos, o que pode implicar em removê-los do treino ou simplesmente ignorá-los.
+  - Tentar "enxugar" os IDs conforme **PDV** do primeiro arquivo.
 
 - **internal_product_id:** Tentar "enxugar" os IDs conforme **PDV** do primeiro arquivo.
 

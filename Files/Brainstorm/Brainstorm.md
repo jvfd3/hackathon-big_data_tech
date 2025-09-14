@@ -35,7 +35,6 @@
 
 - Tentar extrair o arquivo (grande!) no colab. **Rangel tentará fazer isso (10-09-25)**
 
-
 ## Entendendo os dados
 
 - Queremos prever vendas futuras a partir das vendas passadas. Devemos supor que há padrões temporais que queremos capturar.
@@ -45,9 +44,9 @@
 - Algumas features importantes já foram disponibilizadas (categoria dos produtos, das lojas etc)
 
 ## Arquiteturas
-- Pelo número de features, abordagens clássicas de *Machine Learning* podem não ser as melhores, apesar de serem mais rápidas. Além disso, existem redes neurais profundas especializadas em dependências temporais:
+
+- Pelo número de features, abordagens clássicas de _Machine Learning_ podem não ser as melhores, apesar de serem mais rápidas. Além disso, existem redes neurais profundas especializadas em dependências temporais:
 
   - **RNN - Recurrent Neural Network:**  Elas têm uma memória interna que lida com dados em ordem, permitindo que a saída de uma etapa influencie a entrada da próxima. Isso as torna ideais para tarefas onde a ordem dos dados é crucial, como texto e séries temporais.
   - **LSTM - Long Short-Term Memory:** é uma variação da RNN projetada para superar o problema do "gradiente evanescente", que dificulta o aprendizado de dependências de longo prazo. Ela possui uma estrutura interna mais complexa, com "portões" (gates) que controlam o fluxo de informações, permitindo que a rede se lembre de dados importantes por períodos mais longos e ignore informações irrelevantes.
   - **N-BEATS:** é uma arquitetura moderna e robusta projetada especificamente para previsão de séries temporais. Diferente das RNNs, ela é composta por pilhas de redes totalmente conectadas (fully connected networks) que usam uma abordagem de "backcast" e "forecast". Essa estrutura permite modelar e decompor os dados em seus componentes de tendência e sazonalidade, tornando-a mais precisa e, em alguns casos, interpretável. **Rangel tentará implementar essa daqui**
-

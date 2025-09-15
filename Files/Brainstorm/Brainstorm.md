@@ -2,7 +2,43 @@
 
 ## Diagrama resumido
 
-![Diagrama do banco de dados](diagrama.png)
+```mermaid
+erDiagram
+  LOJAS {
+    int PDV
+    int zipcode
+    string Premise
+    string Categoria_pdv
+  }
+
+  TRANSAÇÕES {
+    string internal_store_id
+    string internal_product_id
+    string distributor_id
+    date transaction_date
+    date reference_date
+    number Quantity
+    number gross_value
+    number net_value
+    number gross_profit
+    number discount
+    number taxes
+  }
+
+  PRODUTOS {
+    int produto
+    string categoria
+    string descricao
+    string tipos
+    string label
+    string subcategoria
+    string marca
+    string fabricante
+  }
+
+  LOJAS }|--o{ TRANSAÇÕES : realizam
+  PRODUTOS }|--o{ TRANSAÇÕES : referentes
+```
 
 ## Primeiro arquivo (tid-2779033056155408584-f6316110-4c9a-4061-ae48-69b77c7c8c36-4)
 
@@ -47,7 +83,7 @@
 
 - Pelo número de features, abordagens clássicas de _Machine Learning_ podem não ser as melhores, apesar de serem mais rápidas. Além disso, existem redes neurais profundas especializadas em dependências temporais:
 
-  - **RNN - Recurrent Neural Network:**  Elas têm uma memória interna que lida com dados em ordem, permitindo que a saída de uma etapa influencie a entrada da próxima. Isso as torna ideais para tarefas onde a ordem dos dados é crucial, como texto e séries temporais.
+  - **RNN - Recurrent Neural Network:** Elas têm uma memória interna que lida com dados em ordem, permitindo que a saída de uma etapa influencie a entrada da próxima. Isso as torna ideais para tarefas onde a ordem dos dados é crucial, como texto e séries temporais.
   - **LSTM - Long Short-Term Memory:** é uma variação da RNN projetada para superar o problema do "gradiente evanescente", que dificulta o aprendizado de dependências de longo prazo. Ela possui uma estrutura interna mais complexa, com "portões" (gates) que controlam o fluxo de informações, permitindo que a rede se lembre de dados importantes por períodos mais longos e ignore informações irrelevantes.
   - **N-BEATS:** é uma arquitetura moderna e robusta projetada especificamente para previsão de séries temporais. Diferente das RNNs, ela é composta por pilhas de redes totalmente conectadas (fully connected networks) que usam uma abordagem de "backcast" e "forecast". Essa estrutura permite modelar e decompor os dados em seus componentes de tendência e sazonalidade, tornando-a mais precisa e, em alguns casos, interpretável. **Rangel tentará implementar essa daqui**
 
@@ -79,7 +115,6 @@ $$
 Size = pdv \times prod \times days\\
 \R^{Size+f} \to \R^{Size \cdot ()}
 $$
-
 
 ```mermaid
 graph LR;

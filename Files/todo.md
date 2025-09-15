@@ -49,7 +49,10 @@
       - [ ] Dropout
       - [ ] Activation functions
   - evaluation
+    - [ ] Submission Preparation
+      - [ ] Format the output as required
     - [ ] Entender como aplicar o WMAPE
+      - Testar também com MAPE, RMSE, SMAPE.
 
 ## Previsão de Demanda com WMAPE
 

@@ -1,0 +1,13 @@
+{
+  "Learning_Rate": 0.001,
+  "Batch_Size": 32,
+  "Epochs": 50,
+  "Window_Size": 10,
+  "Layers": [
+    64,
+    128,
+    64
+  ],
+  "Dropout": 0.2,
+  "Activation_Function": "relu"
+}

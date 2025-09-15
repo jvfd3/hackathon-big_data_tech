@@ -19,12 +19,14 @@ def get_zipcode_data(zipcode, country_code='us'):
     return None
 
 # Example usage:
-if __name__ == "__main__":
-  zipcode_1 = 8107
-  zipcode_2 = 90920
-  data = get_zipcode_data(zipcode_2)
+# if __name__ == "__main__":
+#   zipcode_1 = 8107
+#   zipcode_2 = 90920
+#   data = get_zipcode_data(zipcode_2)
   
-  if data:
-    print(data)
-  else:
-    print("No data found for the given zipcode.")
+#   if data:
+#     print(data)
+#   else:
+#     print("No data found for the given zipcode.")
+
+# python.exe get_zipcode_data.py

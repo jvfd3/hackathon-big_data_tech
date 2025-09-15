@@ -50,3 +50,66 @@
   - **RNN - Recurrent Neural Network:**  Elas têm uma memória interna que lida com dados em ordem, permitindo que a saída de uma etapa influencie a entrada da próxima. Isso as torna ideais para tarefas onde a ordem dos dados é crucial, como texto e séries temporais.
   - **LSTM - Long Short-Term Memory:** é uma variação da RNN projetada para superar o problema do "gradiente evanescente", que dificulta o aprendizado de dependências de longo prazo. Ela possui uma estrutura interna mais complexa, com "portões" (gates) que controlam o fluxo de informações, permitindo que a rede se lembre de dados importantes por períodos mais longos e ignore informações irrelevantes.
   - **N-BEATS:** é uma arquitetura moderna e robusta projetada especificamente para previsão de séries temporais. Diferente das RNNs, ela é composta por pilhas de redes totalmente conectadas (fully connected networks) que usam uma abordagem de "backcast" e "forecast". Essa estrutura permite modelar e decompor os dados em seus componentes de tendência e sazonalidade, tornando-a mais precisa e, em alguns casos, interpretável. **Rangel tentará implementar essa daqui**
+
+## Ideias 14/09
+
+- Features Engineering:
+  - Features sazonais
+    - Dia do mês (1-31)
+    - Dias restantes para o QUINTO DIA ÚTIL DO MÊS; (1-31) [Se for Brasil. E quando não é Brasil?]
+    - Dias até o próximo feriado (0-365)
+    - Final de semana (1|0)
+    - Dia da semana (1-7)
+    - Mês (1-12)
+  - Zipcode:
+    - Latitude
+    - Longitude
+    - Temperatura
+    - Chuva
+    - País
+  - Quando é válido o one-hot encoding?
+- **Como será o nosso output**?
+  - Uma tupla gigante? Para cada par produto x pdv? Neurônios retornam valores escalares
+  - Resultado de um dia? De uma semana? das 04 semanas de uma vez?
+  - Entender a loss function WMAPE
+- O que fica no pós-processamento?
+  - Recebemos o dia do ano e depois separamos por semana? Ou já prevemos direto a semana?
+
+$$
+Size = pdv \times prod \times days\\
+\R^{Size+f} \to \R^{Size \cdot ()}
+$$
+
+
+```mermaid
+graph LR;
+  subgraph "Vetor de entradas"
+    direction LR
+    E1((Entrada 1))
+    E2((Entrada 2))
+    E3((Entrada 3))
+    E4(("$$\vdots$$"))
+  end
+  subgraph "Camadas ocultas"
+    direction LR
+    C1[Camada 1]
+    C2[Camada 2]
+    direction LR
+    C3[Camada 3]
+    C4["$$\dots$$"]
+  end
+  E1 --> C1
+  E2 --> C1
+  E3 --> C1
+  E4 --> C1
+  C1 --> C2
+  C2 --> C3
+  C3 --> C4
+  subgraph "Vetor de saídas"
+    O1((semana))
+    O2((pdv))
+    O3((produto))
+    O4((quantidade))
+  end
+  C4 --> O1 & O2 & O3 & O4
+```

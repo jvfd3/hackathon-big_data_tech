@@ -1,19 +1,5 @@
 from torch.utils.data import Dataset, DataLoader
 
-#Inicialização do modelo, da loss function e do otimizador
-
-# Hiperparâmetros do modelo
-input_size = 30
-output_size = 1
-batch_size = 32
-device = "cuda" if torch.cuda.is_available() else "cpu"
-
-# Inicialização do modelo N-BEATS
-model = NBeats(input_size, hidden_size=64, output_size=output_size).to(device)
-
-# Dataset e DataLoader
-dataloader = DataLoader(dataset, batch_size, shuffle=False)
-
 # Função de treinamento
 def train_model_NBeats(model, learning_rate, epochs, device):
 

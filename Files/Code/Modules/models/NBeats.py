@@ -3,7 +3,7 @@ import torch
 import torch.nn as nn
 
 class NBeatsBlock(nn.Module):
-    def __init__(self, input_size, hidden_size, output_size, n_layers=4):
+    def __init__(self, input_size, hidden_size, output_size, n_layers):
         super().__init__()
         layers = []
         for _ in range(n_layers):

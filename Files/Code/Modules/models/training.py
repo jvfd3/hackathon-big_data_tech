@@ -1,7 +1,10 @@
 from torch.utils.data import Dataset, DataLoader
 
+import torch
+import torch.nn as nn
+
 # Função de treinamento
-def train_model_NBeats(model, learning_rate, epochs, device):
+def train_model_NBeats(model, learning_rate, epochs, device, dataloader):
 
     # Otimizador da rede neural (Adam - Adaptive Moment Estimation)
     optimizer = torch.optim.Adam(model.parameters(), learning_rate)

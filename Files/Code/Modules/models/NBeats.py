@@ -18,10 +18,10 @@ class NBeatsBlock(nn.Module):
         return self.backcast(x), self.forecast(x)
 
 class NBeats(nn.Module):
-    def __init__(self, input_size, hidden_size, output_size, n_blocks=3):
+    def __init__(self, input_size, hidden_size, output_size, n_layers, n_blocks=3):
         super().__init__()
         self.blocks = nn.ModuleList([
-            NBeatsBlock(input_size, hidden_size, output_size)
+            NBeatsBlock(input_size, hidden_size, output_size, n_layers)
             for _ in range(n_blocks)
         ])
 

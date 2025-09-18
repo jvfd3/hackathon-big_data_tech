@@ -1,7 +1,7 @@
 from torch.utils.data import Dataset, DataLoader
-
 import torch
-import torch.nn as nn
+from Modules.models.WMAPELoss import WMAPELoss
+
 
 # Função de treinamento
 def train_model_NBeats(model, learning_rate, epochs, device, dataloader):
@@ -10,7 +10,7 @@ def train_model_NBeats(model, learning_rate, epochs, device, dataloader):
     optimizer = torch.optim.Adam(model.parameters(), learning_rate)
 
     # Função de perda (Mean Squared Error) TROCAR SE NECESSÁRIO
-    criterion = nn.MSELoss()
+    criterion = WMAPELoss()
 
     # Loop de treinamento
     for epoch in range(epochs):

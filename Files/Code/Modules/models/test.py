@@ -42,79 +42,39 @@ def soft_test(model, dataloader, device, criterion):
 
 
 
-def hard_test(model, dataloader, device, criterion):
-    """
-    Avalia o modelo em modo hard test (iterativo).
-    Para output_size=1: a previsão é usada como último input do próximo passo.
-    """
-    model.eval()
-    all_preds, all_targets = [], []
-    total_loss = 0.0
-
-    with torch.no_grad():
-        for x, y in dataloader:  # batch_size = 1
-            x, y = x.to(device), y.to(device)
-
-            # histórico inicial
-            history = x.clone()  # (1, input_size)
-
-            # previsão do próximo passo
-            forecast = model(history)  # saída do modelo
-            next_pred = forecast[:, -1].unsqueeze(1)  # (1, 1)
-
-            # se quiser continuar prevendo mais passos, usar o predicted como input
-            history = torch.cat([history[:, 1:], next_pred], dim=1)
-
-            preds = next_pred.squeeze(0)  # (1,)
-
-            if criterion is not None:
-                loss = criterion(preds.to(device), y[:1])
-                total_loss += loss.item()
-
-            all_preds.append(preds.cpu())
-            all_targets.append(y[:1].cpu())
-
-    all_preds = torch.cat(all_preds, dim=0)      # (n_samples,)
-    all_targets = torch.cat(all_targets, dim=0)  # (n_samples,)
-
-    avg_loss = total_loss / len(dataloader) if criterion is not None else None
-    if avg_loss is not None:
-        print(f"Average Loss - Hard Test: {avg_loss:.4f}")
-
-    return all_preds, all_targets, avg_loss
+def hard_test(model, X_train, y_train, y_test, split_point, device, criterion, blind_horizon, output_size):
+    " Função de teste hard - previsão autoregressiva das últimas 4 semanas"
     
+    # Inicialização
+    model.eval() # Coloca o modelo em modo de avaliação
+    total_loss = 0 
+    all_preds = []
+    all_targets = []
 
-def hard_test1(model, dataloader, device, criterion,input_size, n_features):
-    """
-    Avalia o modelo em um dataset de validação, sem teacher forcing (usa sempre ground truth como entrada).
-    """
-    model.eval()
-    total_loss = 0
-    all_preds, all_targets = [], []
+    # Ponto de partida: última janela do conjunto de treino
+    X_test_blind = X_train[split_point - 1]
+    y_test_blind = y_train[split_point - 1]
 
-    with torch.no_grad():
-        for x, y in dataloader:
-            x, y = x.to(device), y.to(device)
-            
-            idx_last = (input_size - 1) * n_features
-            x[:, idx_last] = forecast[:, -1]  # atualiza a feature principal do último timestep
+    for i in range(blind_horizon):
 
-            forecast = model(x)  # previsão do modelo
-            if criterion is not None:
-                loss = criterion(forecast, y)
-                total_loss += loss.item()
-            
-            all_preds.append(forecast.cpu())
-            all_targets.append(y.cpu())
+        # Enviando para o dispositivo (GPU/CPU)
+        X_test_blind = X_test_blind.to(device)
+        
+        # Fazendo a previsão do modelo
+        forecast = model(X_test_blind)
 
-    # Concatena tudo em tensores
-    all_preds = torch.cat(all_preds, dim=0)
-    all_targets = torch.cat(all_targets, dim=0)
+        # Atualizando a entrada para a próxima previsão (autoregressivo)
+        X_test_blind = torch.cat((X_test_blind[output_size:], forecast), dim=0)
+        y_test_blind = y_test[(i+1)*output_size - 1]
 
-    if criterion is not None:
-        avg_loss = total_loss / len(dataloader)
-        print(f"Average Loss - Soft Test: {avg_loss:.4f}")
-    else:
-        avg_loss = None
+        # Armazenando previsões e rótulos
+        all_preds.append(forecast.cpu())
+        all_targets.append(y_test_blind.cpu())
 
+        loss = criterion(forecast, y_test_blind)
+        total_loss += loss.item()
+
+    avg_loss = total_loss / blind_horizon
+    print(f"Average Loss - Hard Test: {avg_loss:.4f}")
+    
     return all_preds, all_targets, avg_loss

@@ -11,6 +11,7 @@ from Modules.models.NBeats import NBeats
 from Modules.models.WMAPELoss import WMAPELoss
     
 def train_model(model, learning_rate, epochs, device, dataloader):
+    """ Training Model """
 
     # Otimizador da rede neural (Adam - Adaptive Moment Estimation)
     optimizer = torch.optim.Adam(model.parameters(), learning_rate)

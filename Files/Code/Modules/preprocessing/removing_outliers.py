@@ -21,7 +21,7 @@ def get_metadata(df, col):
 def remove_outliers(df, col, min_q, max_q, verbose=False):
     def get_by_range(df, col, min_v, max_v):
         return df[(df[col] >= min_v) & (df[col] <= max_v)]
-    
+
     def IQR(df, col, min_quartile=0.1, max_quartile=0.9):
         # 3. Remove outliers using IQR
         Q1 = df[col].quantile(min_quartile)

@@ -22,6 +22,6 @@ def forecast_blind(model, X_train, blind_horizon, device, output_size):
         X_test_blind = torch.cat((X_test_blind[output_size:], forecast), dim=0)
 
         # Armazenando previsões e rótulos
-        all_preds.append(forecast.cpu())
+        all_preds.append(forecast.to(device))
 
     return torch.cat(all_preds, dim=0)

@@ -4,7 +4,7 @@
 import matplotlib.pyplot as plt
 import torch
 
-def sanity_check_plot(model, dataloader, device, output_size):
+def sanity_check_plot(model, dataloader, device, output_size, plot: bool=False):
     """
     Plota previsões vs ground truth no período de treino
     """
@@ -25,9 +25,10 @@ def sanity_check_plot(model, dataloader, device, output_size):
             all_targets.extend(y)
 
     # Plot
-    plt.figure(figsize=(12, 5))
-    plt.plot(all_targets, label="Ground truth", linewidth=2)
-    plt.plot(all_preds, label="Previsões", linewidth=2, alpha=0.7)
-    plt.title("Sanity check - Previsões vs Ground Truth (treino)")
-    plt.legend()
-    plt.show()
+    if plot:
+        plt.figure(figsize=(12, 5))
+        plt.plot(all_targets, label="Ground truth", linewidth=2)
+        plt.plot(all_preds, label="Previsões", linewidth=2, alpha=0.7)
+        plt.title("Sanity check - Previsões vs Ground Truth (treino)")
+        plt.legend()
+        plt.show()

@@ -13,7 +13,7 @@ from Modules.models.dataset import get_dataset
 from Modules.models.forecast import forecast_blind
 
 def get_predictions(clean_data, prediction_col, hyperparams):
-    sample = get_sample(clean_data, prediction_col)
+    sample = get_sample(clean_data, prediction_col, hyperparams['debug']['plot'])
     sample, feature = create_feature_rescale(sample)
     dataset_full, X, y = get_dataset(sample, feature, hyperparams)
     X_train, y_train, X_test, y_test, num_features = get_train_validation(dataset_full, X, y, hyperparams)

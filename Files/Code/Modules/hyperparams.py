@@ -3,9 +3,15 @@ import torch
 def get_hyperparams():
     HYPERPARAMS = {
         'debug': { # Parameters for debugging and verbosity
-            'verbose': False,        # Print debug information
+            'verbose': True,        # Print debug information
             'plot': True,           # Plot training and validation losses
             'time': True,           # Print time taken for training
+        },
+        'loading': {
+            'ourliers': {
+                'min_quantile': 0.1,  # Minimum quantile for outlier removal
+                'max_quantile': 0.9   # Maximum quantile for outlier removal
+            }
         },
         # Neural Network Global Parameters
         'input_size': 30,       # Number of past days to use as input

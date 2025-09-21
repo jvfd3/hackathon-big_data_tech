@@ -33,7 +33,7 @@ def soft_test(model, dataloader, device, criterion):
 
     return all_preds, all_targets, avg_loss
 
-def hard_test(model, X_train, y_train, y_test, split_point, device, criterion, blind_horizon, output_size):
+def hard_test(model, X_train, y_train, y_test, split_point, device, criterion, blind_horizon, output_size, debug):
     " Função de teste hard - previsão autoregressiva das últimas 4 semanas"
     
     # Inicialização
@@ -66,6 +66,7 @@ def hard_test(model, X_train, y_train, y_test, split_point, device, criterion, b
         total_loss += loss.item()
 
     avg_loss = total_loss / blind_horizon
-    print(f"Average Loss - Hard Test: {avg_loss:.4f}")
+    if debug['verbose']:
+        print(f"Average Loss - Hard Test: {avg_loss:.4f}")
     
     return all_preds, all_targets, avg_loss

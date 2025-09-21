@@ -43,7 +43,7 @@ def get_train_validation(dataset_full, X, y, hyperparams):
 
 
 
-def validate_model(model, dataset_full, criterion, X_train, y_train, X_test, y_test, hyperparams, verbose: bool=True):
+def validate_model(model, dataset_full, criterion, X_train, y_train, X_test, y_test, hyperparams, plot: bool=False):
     """
     Validação do modelo treinado
     """
@@ -78,7 +78,7 @@ def validate_model(model, dataset_full, criterion, X_train, y_train, X_test, y_t
         for t in all_targets_tensor:
             all_targets_array.append(t.detach().numpy())
 
-        if verbose:
+        if plot:
             plt.figure(figsize=(12, 5))
             plt.plot(all_targets_array, label="Ground truth", linewidth=2)
             plt.plot(all_preds_array, label="Previsões", linewidth=2, alpha=0.7)

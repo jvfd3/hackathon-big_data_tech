@@ -18,13 +18,13 @@ def get_metadata(df, col):
         'max': df[col].max()
     }
 
-def remove_outliers(df, col, min_q, max_q, verbose=False):
+def remove_outliers(df, col, outlier_scope, debug):
     def get_by_range(df, col, min_v, max_v):
         return df[(df[col] >= min_v) & (df[col] <= max_v)]
 
-    def IQR(df, col, min_quartile=0.1, max_quartile=0.9):
+    def IQR(df, col, m_quartile=0.1, max_quartile=0.9):
         # 3. Remove outliers using IQR
-        Q1 = df[col].quantile(min_quartile)
+        Q1 = df[col].quantile(m_quartile)
         Q3 = df[col].quantile(max_quartile)
         IQR = Q3 - Q1
         lower_bound = Q1 - 1.5 * IQR
@@ -45,22 +45,27 @@ def remove_outliers(df, col, min_q, max_q, verbose=False):
         outlierless = df[df[col] > 0]
         return outlierless
 
-    if verbose:
+    if debug['verbose']:
         print('Before Outlier Removal:', get_metadata(df, col))
+    if debug['plot']:
         plot_graphs(df, col, 'Before Outlier Removal', buckets=100)
 
+    min_q = outlier_scope.get('min_quantile', 0.1)
+    max_q = outlier_scope.get('max_quantile', 0.9)
     # outlierless, metadata = bruter(df, col)
     # outlierless, metadata = brute(df, col)
     outlierless = IQR(df, col, min_q, max_q)
 
-    if verbose:
+    if debug['verbose']:
         print('After Outlier Removal:', get_metadata(outlierless, col))
+    if debug['plot']:
         plot_graphs(outlierless, col=col, title='After Outlier Removal', buckets=100)
 
     outlierless = force_positives(outlierless, col)
 
-    if verbose:
+    if debug['verbose']:
         print('After Forcing Positives:', get_metadata(outlierless, col))
+    if debug['plot']:
         plot_graphs(outlierless, col=col, title='After Forcing Positives', buckets=100)
 
     return outlierless

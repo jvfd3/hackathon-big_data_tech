@@ -3,10 +3,10 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
-def get_sample(clean_data, col, verbose: bool = False):
+def get_sample(clean_data, col, plot: bool = False):
     sample = clean_data[col].values
     # sample = clean_data[sampled_col.sum()].values
-    if verbose:
+    if plot:
         plt.figure(figsize=(12, 6))
         plt.bar(range(len(clean_data)), sample)
     return sample

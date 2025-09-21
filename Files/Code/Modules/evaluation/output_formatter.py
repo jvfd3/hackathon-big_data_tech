@@ -21,7 +21,7 @@ import torch
 from datetime import datetime
 
 
-def forecast_to_output(prediction: torch.Tensor, col_id: str) -> pd.DataFrame:
+def forecast_to_output(predictions) -> pd.DataFrame:
     """
     Converte a previsão do modelo em um DataFrame formatado para submissão.
     
@@ -34,23 +34,22 @@ def forecast_to_output(prediction: torch.Tensor, col_id: str) -> pd.DataFrame:
     """
     import math
 
-    # Converter o tensor de previsão para um array numpy
-    values = prediction.detach().cpu().numpy().flatten()
+    for key, value in predictions.items():
+        product_id, store_id = key
+        values = value.detach().cpu().numpy().flatten()
 
-    weeks = []
-    for i in range(0, len(values), 7):
-        week_sum = values[i:i+7].sum()
-        weeks.append(math.ceil(week_sum))
+        weeks = []
+        for i in range(0, len(values), 7):
+            week_sum = values[i:i+7].sum()
+            weeks.append(math.ceil(week_sum))
 
-    store_id, produ_id = col_id
-
-    # Crie o DataFrame final
-    df_final = pd.DataFrame({
-        'semana': range(1, len(weeks)+1),
-        'pdv': store_id,
-        'produto': produ_id,
-        'quantidade': weeks
-    })
-    df_final.to_csv('submission.csv', index=False, sep=';', encoding='utf-8')
+        # Crie o DataFrame final
+        df_final = pd.DataFrame({
+            'semana': range(1, len(weeks)+1),
+            'pdv': store_id,
+            'produto': product_id,
+            'quantidade': weeks
+        })
+        df_final.to_csv('submission.csv', index=False, sep=';', encoding='utf-8')
 
     return df_final

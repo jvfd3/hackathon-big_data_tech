@@ -34,6 +34,13 @@ def forecast_to_output(predictions) -> pd.DataFrame:
     """
     import math
 
+    df_final = df_final.astype({
+        'semana': 'int32',
+        'pdv': 'int32',
+        'produto': 'int32',
+        'quantidade': 'int32'
+    })
+    
     for key, value in predictions.items():
         product_id, store_id = key
         values = value.detach().cpu().numpy().flatten()
@@ -44,12 +51,14 @@ def forecast_to_output(predictions) -> pd.DataFrame:
             weeks.append(math.ceil(week_sum))
 
         # Crie o DataFrame final
-        df_final = pd.DataFrame({
-            'semana': range(1, len(weeks)+1),
+        df_temp = pd.DataFrame({
+            'semana': list(range(1, len(weeks) + 1)),
             'pdv': store_id,
             'produto': product_id,
             'quantidade': weeks
         })
-        df_final.to_csv('submission.csv', index=False, sep=';', encoding='utf-8')
+        # Append to df_final
+        df_final = pd.concat([df_final, df_temp], ignore_index=True)
 
+    df_final.to_csv('submission.csv', index=False, sep=';', encoding='utf-8')
     return df_final

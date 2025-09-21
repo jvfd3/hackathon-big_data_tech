@@ -49,9 +49,11 @@ def get_clean_data(verbose: bool = False) -> pd.DataFrame:
     outlierless = remove_outliers(numerical_table.copy(), 'quantity', 0.1, 0.9) # Removing outliers from 'quantity' column
     debug_time('pivoted_df', verbose)
     pivoted_df = pivoting_df(outlierless.copy()) # Pivoting the DataFrame
-    debug_time('rescaled_df', verbose)
-    rescaled_df = rescale_zero_to_one(pivoted_df.copy()) # Re-scaling
-    debug_time('copying', verbose)
-    clean_data = rescaled_df.copy() # Final clean data
+    
+    # debug_time('rescaled_df', verbose)
+    # rescaled_df = rescale_zero_to_one(pivoted_df.copy()) # Re-scaling
+    # debug_time('copying', verbose)
+    # clean_data = rescaled_df.copy() # Final clean data
+    
     debug_time('returning', verbose)
-    return clean_data
+    return pivoted_df

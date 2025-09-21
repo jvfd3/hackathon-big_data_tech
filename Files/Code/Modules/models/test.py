@@ -33,15 +33,6 @@ def soft_test(model, dataloader, device, criterion):
 
     return all_preds, all_targets, avg_loss
 
-
-
-
-
-
-
-
-
-
 def hard_test(model, X_train, y_train, y_test, split_point, device, criterion, blind_horizon, output_size):
     " Função de teste hard - previsão autoregressiva das últimas 4 semanas"
     

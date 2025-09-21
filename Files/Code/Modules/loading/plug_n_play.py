@@ -14,7 +14,7 @@ import time
 # from Files.Code.Modules.preprocessing.rescaling import rescale_zero_to_one
 
 """ USE THIS FOR MODULE USAGE """
-from Modules.loading.read_parquet import get_file_paths, load_dataframes
+from Modules.loading.read_parquet import get_file_paths, load_dataframes, lazy_load_clean_data, save_cleaned_data_path
 # from Modules.preprocessing.onehot import one_hot_encode_parquet
 from Modules.preprocessing.removing_categorical_tables import get_numerical_table
 from Modules.preprocessing.removing_outliers import remove_outliers
@@ -37,23 +37,33 @@ def debug_time(label: str, debug: dict):
 
 def get_clean_data(hyperparams) -> pd.DataFrame:
     debug = hyperparams['debug']
-    outliers = hyperparams['loading']['ourliers']
+    outliers = hyperparams['loading']['outliers']
+
+    # Didn't Work
+    # skip = hyperparams['loading']['skip_preprocess']
+    # if skip:
+    #     return lazy_load_clean_data()
     
-    debug_time('FILE_PATHS', debug)
     FILE_PATHS = get_file_paths() # Setting up the constants
-    debug_time('loaded_data', debug)
+    debug_time('FILE_PATHS', debug)
     loaded_data = load_dataframes(FILE_PATHS) # Loading the data
-    debug_time('numerical_table', debug)
+    debug_time('loaded_data', debug)
     numerical_table = get_numerical_table(loaded_data) # getting only the needed numerical data
+    debug_time('numerical_table', debug)
+    outlierless = remove_outliers(numerical_table, 'quantity', outliers, debug) # Removing outliers from 'quantity' column
     debug_time('outlierless', debug)
-    outlierless = remove_outliers(numerical_table.copy(), 'quantity', outliers, debug) # Removing outliers from 'quantity' column
+    pivoted_df = pivoting_df(outlierless) # Pivoting the DataFrame
     debug_time('pivoted_df', debug)
-    pivoted_df = pivoting_df(outlierless.copy()) # Pivoting the DataFrame
+
+    # Didn't work
+    # if not skip:
+    #     save_cleaned_data_path(pivoted_df)
+    #     debug_time('resaved_df', debug)
     
     # debug_time('rescaled_df', debug)
     # rescaled_df = rescale_zero_to_one(pivoted_df.copy()) # Re-scaling
     # debug_time('copying', debug)
     # clean_data = rescaled_df.copy() # Final clean data
     
-    debug_time('returning', debug)
+    # debug_time('returning', debug)
     return pivoted_df

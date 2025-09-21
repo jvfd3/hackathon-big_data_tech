@@ -8,7 +8,8 @@ def get_hyperparams():
             'time': True,           # Print time taken for training
         },
         'loading': {
-            'ourliers': {
+            'skip_preprocess': True,  # Skip preprocessing if data is already clean
+            'outliers': {
                 'min_quantile': 0.1,  # Minimum quantile for outlier removal
                 'max_quantile': 0.9   # Maximum quantile for outlier removal
             }

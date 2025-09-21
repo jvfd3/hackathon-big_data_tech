@@ -50,3 +50,23 @@ def load_dataframes(file_paths):
         dataframes[id] = read_parquet_file(path)
 
     return dataframes
+
+def lazy_load_clean_data():
+    """
+    Lazily loads a preprocessed clean data Parquet file.
+
+    Returns:
+        pd.DataFrame: Data read from the clean data Parquet file.
+    """
+    CLEAN_DATA_PATH = "../Data/clean_data.parquet"
+    return read_parquet_file(CLEAN_DATA_PATH)
+
+def save_cleaned_data_path(df: pd.DataFrame):
+    """
+    Saves the given DataFrame to a Parquet file.
+
+    Args:
+        df (pd.DataFrame): DataFrame to be saved.
+    """
+    CLEAN_DATA_PATH = "../Data/clean_data.parquet"
+    df.to_parquet(CLEAN_DATA_PATH, index=True)

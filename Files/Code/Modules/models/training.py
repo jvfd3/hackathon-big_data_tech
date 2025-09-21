@@ -36,7 +36,7 @@ def train_model(model, learning_rate, epochs, device, dataloader, hyperparams):
             total_loss += loss.item()
         if hyperparams['debug']['verbose']:
             size = len(str(epochs))
-            print(f"Epoch {epoch+1:size}/{epochs}, Loss: {total_loss/len(dataloader):.4f}")
+            print(f"Epoch {epoch+1:0{size}d}/{epochs}, Loss: {total_loss/len(dataloader):.4f}")
     print(f"Treinamento concluído. Loss final: {total_loss/len(dataloader):.4f}")
     return model
 

@@ -1,9 +1,6 @@
 """ Importing libraries """
 
 import pandas as pd
-import numpy as np
-import matplotlib.pyplot as plt
-import seaborn as sns
 import time
 
 """ Importing our modules """
@@ -22,7 +19,7 @@ from Modules.loading.read_parquet import get_file_paths, load_dataframes
 from Modules.preprocessing.removing_categorical_tables import get_numerical_table
 from Modules.preprocessing.removing_outliers import remove_outliers
 from Modules.preprocessing.pivoting import pivoting_df
-from Modules.preprocessing.rescaling import rescale_zero_to_one
+# from Modules.preprocessing.rescaling import rescale_zero_to_one
 
 last_run = time.time()
 

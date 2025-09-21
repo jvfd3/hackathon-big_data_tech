@@ -1,9 +1,15 @@
-from torch.utils.data import Dataset, DataLoader
+
 import torch
+from torch.utils.data import DataLoader
+
+# from Files.Code.Modules.models.make_dataset import SingleSeriesDataset
+# from Files.Code.Modules.models.NBeats import NBeats
+# from Files.Code.Modules.models.WMAPELoss import WMAPELoss
+
+from Modules.models.make_dataset import SingleSeriesDataset
+from Modules.models.NBeats import NBeats
 from Modules.models.WMAPELoss import WMAPELoss
-
-
-# Função de treinamento
+    
 def train_model(model, learning_rate, epochs, device, dataloader):
 
     # Otimizador da rede neural (Adam - Adaptive Moment Estimation)
@@ -29,5 +35,6 @@ def train_model(model, learning_rate, epochs, device, dataloader):
 
         print(f"Epoch {epoch+1}/{epochs}, Loss: {total_loss/len(dataloader):.4f}")
 
+    return model
 
-    return model, criterion, optimizer
+

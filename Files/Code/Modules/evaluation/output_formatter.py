@@ -17,9 +17,6 @@
 """
 
 import pandas as pd
-import torch
-from datetime import datetime
-
 
 def forecast_to_output(predictions) -> pd.DataFrame:
     """
@@ -34,6 +31,7 @@ def forecast_to_output(predictions) -> pd.DataFrame:
     """
     import math
 
+    df_final = pd.DataFrame(columns=['semana', 'pdv', 'produto', 'quantidade'])
     df_final = df_final.astype({
         'semana': 'int32',
         'pdv': 'int32',

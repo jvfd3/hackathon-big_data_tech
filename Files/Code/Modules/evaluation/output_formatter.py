@@ -46,7 +46,7 @@ def forecast_to_output(predictions) -> pd.DataFrame:
         weeks = []
         for i in range(0, len(values), 7):
             week_sum = values[i:i+7].sum()
-            weeks.append(math.ceil(week_sum))
+            weeks.append(round(week_sum))
 
         # Crie o DataFrame final
         df_temp = pd.DataFrame({

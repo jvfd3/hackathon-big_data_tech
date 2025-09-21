@@ -45,7 +45,8 @@ def get_blind_prediction(model, X_train, hyperparams):
     split = hyperparams['split']
 
     if split != 1.0:
-        print("Previsão cega não realizada, pois split < 1.0")
+        if hyperparams['debug']['verbose']:
+            print("Previsão cega não realizada, pois split < 1.0")
         return
 
     blind_prediction = forecast_blind(model, X_train, blind_horizon, device, output_size)

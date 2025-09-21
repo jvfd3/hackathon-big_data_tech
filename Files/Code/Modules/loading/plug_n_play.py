@@ -38,16 +38,16 @@ def debug_time(label: str, verbose: bool = False):
     print(f"{minutes:02d}:{seconds:02d}:{miliseconds:03d}", label)
     last_run = current_time
 
-def get_clean_data(verbose: bool = False) -> pd.DataFrame:
-    debug_time('FILE_PATHS', verbose)
+def get_clean_data(debug) -> pd.DataFrame:
+    debug_time('FILE_PATHS', debug['verbose'])
     FILE_PATHS = get_file_paths() # Setting up the constants
-    debug_time('loaded_data', verbose)
+    debug_time('loaded_data', debug['verbose'])
     loaded_data = load_dataframes(FILE_PATHS) # Loading the data
-    debug_time('numerical_table', verbose)
+    debug_time('numerical_table', debug['verbose'])
     numerical_table = get_numerical_table(loaded_data) # getting only the needed numerical data
-    debug_time('outlierless', verbose)
+    debug_time('outlierless', debug['verbose'])
     outlierless = remove_outliers(numerical_table.copy(), 'quantity', 0.1, 0.9) # Removing outliers from 'quantity' column
-    debug_time('pivoted_df', verbose)
+    debug_time('pivoted_df', debug['verbose'])
     pivoted_df = pivoting_df(outlierless.copy()) # Pivoting the DataFrame
     
     # debug_time('rescaled_df', verbose)
@@ -55,5 +55,5 @@ def get_clean_data(verbose: bool = False) -> pd.DataFrame:
     # debug_time('copying', verbose)
     # clean_data = rescaled_df.copy() # Final clean data
     
-    debug_time('returning', verbose)
+    debug_time('returning', debug['verbose'])
     return pivoted_df

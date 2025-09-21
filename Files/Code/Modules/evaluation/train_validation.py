@@ -34,9 +34,10 @@ def get_train_validation(dataset_full, X, y, hyperparams):
     if split < 1:
         X_test  = X_test.view(X_test.shape[0], -1) # shape = [num_windows_test, input_size * n_features]
 
-    print(f"Há um total de {len(dataset_full)} janelas e o split ocorre em {split*100:.0f}% do dataset")
-    print(f" O shape de X_train é {X_train.shape} e o shape de X_test é {X_test.shape}") if split < 1 else ""
-    print(f" O shape de y_train é {y_train.shape} e o shape de y_test é {y_test.shape}") if split < 1 else ""
+    if hyperparams['debug']['verbose']:
+        print(f"Há um total de {len(dataset_full)} janelas e o split ocorre em {split*100:.0f}% do dataset")
+        print(f" O shape de X_train é {X_train.shape} e o shape de X_test é {X_test.shape}") if split < 1 else ""
+        print(f" O shape de y_train é {y_train.shape} e o shape de y_test é {y_test.shape}") if split < 1 else ""
 
     return X_train, y_train, X_test, y_test, num_features
 

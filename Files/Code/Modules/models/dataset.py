@@ -18,8 +18,10 @@ def get_dataset(sample, feature, hyperparams):
     # Número total de amostras (janelas diferentes) que podem ser extraídas
     # de um mesmo sample
     num_windows = len(sample) - input_size - output_size + 1
-    print(f"Número total de janelas extraídas: {num_windows}")
-    print(f"Para janelas de tamanho {input_size} e previsão de {output_size} dias à frente.")
+
+    if hyperparams['debug']['verbose']:
+        print(f"Número total de janelas extraídas: {num_windows}")
+        print(f"Para janelas de tamanho {input_size} e previsão de {output_size} dias à frente.")
     # Extraindo janelas deslizantes
     for i in range(num_windows):
 
@@ -36,9 +38,11 @@ def get_dataset(sample, feature, hyperparams):
     # Convertendo para arrays numpy e depois para tensores PyTorch
     X = np.array(X)  # shape = [num_windows, input_size, num_features]
     y = np.array(y)  # shape = [num_windows, output_size]
-    print()
-    print("O vetor de entrada  antes do flatten")
-    print(f"tem shape (num_windows, size_window, num_features): {X.shape}")
+
+    if hyperparams['debug']['verbose']:
+        print()
+        print("O vetor de entrada antes do flatten")
+        print(f"tem shape (num_windows, size_window, num_features): {X.shape}")
 
     X = torch.tensor(X, dtype=torch.float32)  # shape = [n_samples, input_size, 1]
 

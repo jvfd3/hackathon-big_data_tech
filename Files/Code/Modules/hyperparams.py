@@ -3,7 +3,7 @@ import torch
 def get_hyperparams():
     HYPERPARAMS = {
         'debug': { # Parameters for debugging and verbosity
-            'verbose': True,        # Print debug information
+            'verbose': False,        # Print debug information
             'plot': True,           # Plot training and validation losses
             'time': True,           # Print time taken for training
         },

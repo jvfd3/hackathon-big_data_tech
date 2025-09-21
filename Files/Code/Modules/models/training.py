@@ -10,7 +10,7 @@ from Modules.models.make_dataset import SingleSeriesDataset
 from Modules.models.NBeats import NBeats
 from Modules.models.WMAPELoss import WMAPELoss
     
-def train_model(model, learning_rate, epochs, device, dataloader):
+def train_model(model, learning_rate, epochs, device, dataloader, hyperparams):
     """ Training Model """
 
     # Otimizador da rede neural (Adam - Adaptive Moment Estimation)
@@ -33,8 +33,9 @@ def train_model(model, learning_rate, epochs, device, dataloader):
             optimizer.step()
 
             total_loss += loss.item()
-
-        print(f"Epoch {epoch+1}/{epochs}, Loss: {total_loss/len(dataloader):.4f}")
+        if hyperparams['debug']['verbose']:
+            size = len(str(epochs))
+            print(f"Epoch {epoch+1:size}/{epochs}, Loss: {total_loss/len(dataloader):.4f}")
 
     return model
 
@@ -57,5 +58,5 @@ def traininig_func(X_train, y_train, num_features, hyperparams):
 
     # Inicialização do modelo N-BEATS (considerando X_train com num_features)
     model = NBeats(input_size*num_features, hidden_size, output_size, n_layers).to(device)
-    model = train_model(model, learning_rate, epochs, device, dataloader)
+    model = train_model(model, learning_rate, epochs, device, dataloader, hyperparams)
     return model

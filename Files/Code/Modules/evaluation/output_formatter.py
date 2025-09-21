@@ -17,35 +17,40 @@
 """
 
 import pandas as pd
+import torch
 from datetime import datetime
 
-def format_output(data):
-  """ Formats the output data into CSV format.
 
-  Args:
-    data (parquet data): Headers: ['semana', 'pdv', 'produto', 'quantidade']
+def forecast_to_output(prediction: torch.Tensor, col_id: str) -> pd.DataFrame:
+    """
+    Converte a previsão do modelo em um DataFrame formatado para submissão.
+    
+    Args:
+        prediction (torch.Tensor): Tensor de previsão com shape (num_predictions, output_size).
+        col_id (str): Identificador da coluna no formato 'produto_loja'.
+        
+    Returns:
+        pd.DataFrame: DataFrame formatado com colunas ['semana', 'pdv', 'produto', 'quantidade'].
+    """
+    import math
 
-  Returns:
-    str: The formatted CSV string.
-  """
-  if not data:
-    return ""
-  
-  # converting the parquet data to CSV format
-  df = pd.DataFrame(data, columns=['semana', 'pdv', 'produto', 'quantidade'])
-  csv_data = df.to_csv(index=False, sep=';', encoding='utf-8')
-  return csv_data
-  
-def save_to_csv(data, file_path='Files/Output/results'):
-  """ Saves the formatted data to a CSV file.
+    # Converter o tensor de previsão para um array numpy
+    values = prediction.detach().cpu().numpy().flatten()
 
-  Args:
-    data (str): The formatted CSV string.
-    file_path (str): The path where the CSV file will be saved.
-  """
-  # Get timestamp for unique file naming
-  timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-  file_path = f"{file_path}_{timestamp}.csv"
-  
-  with open(file_path, 'w') as file:
-    file.write(data)
+    weeks = []
+    for i in range(0, len(values), 7):
+        week_sum = values[i:i+7].sum()
+        weeks.append(math.ceil(week_sum))
+
+    store_id, produ_id = col_id
+
+    # Crie o DataFrame final
+    df_final = pd.DataFrame({
+        'semana': range(1, len(weeks)+1),
+        'pdv': store_id,
+        'produto': produ_id,
+        'quantidade': weeks
+    })
+    df_final.to_csv('submission.csv', index=False, sep=';', encoding='utf-8')
+
+    return df_final

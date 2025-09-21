@@ -18,7 +18,7 @@ def get_metadata(df, col):
         'max': df[col].max()
     }
 
-def remove_outliers(df, col, min_q, max_q):
+def remove_outliers(df, col, min_q, max_q, verbose=False):
     def get_by_range(df, col, min_v, max_v):
         return df[(df[col] >= min_v) & (df[col] <= max_v)]
     
@@ -45,20 +45,22 @@ def remove_outliers(df, col, min_q, max_q):
         outlierless = df[df[col] > 0]
         return outlierless
 
-
-    print('Before Outlier Removal:', get_metadata(df, col))
-    plot_graphs(df, col, 'Before Outlier Removal', buckets=100)
+    if verbose:
+        print('Before Outlier Removal:', get_metadata(df, col))
+        plot_graphs(df, col, 'Before Outlier Removal', buckets=100)
 
     # outlierless, metadata = bruter(df, col)
     # outlierless, metadata = brute(df, col)
     outlierless = IQR(df, col, min_q, max_q)
 
-    print('After Outlier Removal:', get_metadata(outlierless, col))
-    plot_graphs(outlierless, col=col, title='After Outlier Removal', buckets=100)
+    if verbose:
+        print('After Outlier Removal:', get_metadata(outlierless, col))
+        plot_graphs(outlierless, col=col, title='After Outlier Removal', buckets=100)
 
     outlierless = force_positives(outlierless, col)
 
-    print('After Forcing Positives:', get_metadata(outlierless, col))
-    plot_graphs(outlierless, col=col, title='After Forcing Positives', buckets=100)
+    if verbose:
+        print('After Forcing Positives:', get_metadata(outlierless, col))
+        plot_graphs(outlierless, col=col, title='After Forcing Positives', buckets=100)
 
     return outlierless

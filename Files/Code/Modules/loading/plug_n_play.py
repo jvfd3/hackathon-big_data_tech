@@ -35,16 +35,18 @@ def debug_time(label: str, debug: dict):
     print(f"{minutes:02d}:{seconds:02d}:{miliseconds:03d}", label)
     last_run = current_time
 
-def get_clean_data(debug) -> pd.DataFrame:
+def get_clean_data(hyperparams) -> pd.DataFrame:
     debug = hyperparams['debug']
     outliers = hyperparams['loading']['ourliers']
+    
+    debug_time('FILE_PATHS', debug)
     FILE_PATHS = get_file_paths() # Setting up the constants
     debug_time('loaded_data', debug)
     loaded_data = load_dataframes(FILE_PATHS) # Loading the data
     debug_time('numerical_table', debug)
     numerical_table = get_numerical_table(loaded_data) # getting only the needed numerical data
-    outlierless = remove_outliers(numerical_table.copy(), 'quantity', 0.1, 0.9) # Removing outliers from 'quantity' column
     debug_time('outlierless', debug)
+    outlierless = remove_outliers(numerical_table.copy(), 'quantity', outliers, debug) # Removing outliers from 'quantity' column
     debug_time('pivoted_df', debug)
     pivoted_df = pivoting_df(outlierless.copy()) # Pivoting the DataFrame
     

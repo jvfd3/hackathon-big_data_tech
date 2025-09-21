@@ -1,6 +1,7 @@
 
 import torch
 from torch.utils.data import DataLoader
+from torch import nn
 
 # from Files.Code.Modules.models.make_dataset import SingleSeriesDataset
 # from Files.Code.Modules.models.NBeats import NBeats
@@ -16,8 +17,8 @@ def train_model(model, learning_rate, epochs, device, dataloader, hyperparams):
     # Otimizador da rede neural (Adam - Adaptive Moment Estimation)
     optimizer = torch.optim.Adam(model.parameters(), learning_rate)
 
-    # Função de perda (Mean Squared Error) TROCAR SE NECESSÁRIO
-    criterion = WMAPELoss()
+    # Função de perda (L1 Loss - Mean Absolute Error)
+    criterion = nn.L1Loss()
 
     # Loop de treinamento
     for epoch in range(epochs):
@@ -36,7 +37,7 @@ def train_model(model, learning_rate, epochs, device, dataloader, hyperparams):
         if hyperparams['debug']['verbose']:
             size = len(str(epochs))
             print(f"Epoch {epoch+1:size}/{epochs}, Loss: {total_loss/len(dataloader):.4f}")
-
+    print(f"Treinamento concluído. Loss final: {total_loss/len(dataloader):.4f}")
     return model
 
 

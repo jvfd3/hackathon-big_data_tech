@@ -44,9 +44,9 @@ def get_dataset(sample, feature, hyperparams):
         print("O vetor de entrada antes do flatten")
         print(f"tem shape (num_windows, size_window, num_features): {X.shape}")
 
-    X = torch.tensor(X, dtype=torch.float32)  # shape = [n_samples, input_size, 1]
+    X = torch.tensor(X, dtype=torch.float16)  # shape = [n_samples, input_size, 1]
 
-    y = torch.tensor(y, dtype=torch.float32)  # shape = [n_samples, 1]
+    y = torch.tensor(y, dtype=torch.float16)  # shape = [n_samples, 1]
 
 
     dataset_full = SingleSeriesDataset(X, y)

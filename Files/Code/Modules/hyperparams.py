@@ -3,8 +3,8 @@ import torch
 def get_hyperparams():
     HYPERPARAMS = {
         'debug': { # Parameters for debugging and verbosity
-            'verbose': True,        # Print debug information
-            'plot': True,           # Plot training and validation losses
+            'verbose': False,        # Print debug information
+            'plot': False,           # Plot training and validation losses
             'time': True,           # Print time taken for training
         },
         'loading': {
@@ -27,5 +27,6 @@ def get_hyperparams():
         'blind_horizon': 4,     # Number of days to exclude from the end of the training set for hard test
         'split': 1,             # Proportion of data to use for training (1.0 for validation)
         'seed': 42,             # Random seed for reproducibility
+        'patience': 5,          # Early stopping patience
     }
     return HYPERPARAMS

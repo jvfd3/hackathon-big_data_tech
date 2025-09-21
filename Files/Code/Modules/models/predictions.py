@@ -25,9 +25,9 @@ def get_predictions(clean_data, prediction_col, hyperparams):
 
 def get_dataframe_predictions(clean_data, HYPERPARAMS):
     final_predictions = dict()
-
+    patience = HYPERPARAMS['patience']
     i = 0
-    for col in clean_data.T[:5].T:
+    for col in clean_data.T[:patience].T:
         print(f"Previsão para a coluna: {i}/{len(clean_data.T)}")       
         i += 1
         final_predictions[col] = get_predictions(clean_data, col, HYPERPARAMS)

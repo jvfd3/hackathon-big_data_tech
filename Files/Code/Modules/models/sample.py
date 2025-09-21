@@ -15,8 +15,9 @@ def get_sample(clean_data, col, plot: bool = False):
 """ Create Feature and Rescale """
 
 def create_feature_rescale(sampled): # Rescaling e sampling
-    sample = (sampled - np.min(sampled)) / (np.max(sampled) - np.min(sampled))
+    #sample = (sampled - np.min(sampled)) / (np.max(sampled) - np.min(sampled))
+    sample = sampled
     
     feature = [sampled[t] - sampled[t-1] for t in range(1, len(sampled))]
-    feature = (feature - np.min(feature)) / (np.max(feature) - np.min(feature))
+    #feature = (feature - np.min(feature)) / (np.max(feature) - np.min(feature))
     return sample, feature

@@ -18,8 +18,8 @@ def soft_test(model, dataloader, device, criterion):
                 loss = criterion(forecast, y)
                 total_loss += loss.item()
             
-            all_preds.append(forecast.cpu())
-            all_targets.append(y.cpu())
+            all_preds.append(forecast.to(device))
+            all_targets.append(y.to(device))
 
     # Concatena tudo em tensores
     all_preds = torch.cat(all_preds, dim=0)
@@ -68,8 +68,8 @@ def hard_test(model, X_train, y_train, y_test, split_point, device, criterion, b
         y_test_blind = y_test[(i+1)*output_size - 1]
 
         # Armazenando previsões e rótulos
-        all_preds.append(forecast.cpu())
-        all_targets.append(y_test_blind.cpu())
+        all_preds.append(forecast.to(device))
+        all_targets.append(y_test_blind.to(device))
 
         loss = criterion(forecast, y_test_blind)
         total_loss += loss.item()

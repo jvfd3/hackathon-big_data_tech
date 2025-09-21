@@ -17,8 +17,10 @@
 """
 
 import pandas as pd
+import numpy as np
+import math
 
-def forecast_to_output(predictions) -> pd.DataFrame:
+def forecast_to_output(predictions, create=True) -> pd.DataFrame:
     """
     Converte a previsão do modelo em um DataFrame formatado para submissão.
     
@@ -29,8 +31,20 @@ def forecast_to_output(predictions) -> pd.DataFrame:
     Returns:
         pd.DataFrame: DataFrame formatado com colunas ['semana', 'pdv', 'produto', 'quantidade'].
     """
-    import math
+    df_final = create_empty_submission() if create else pd.read_csv('submission.csv', sep=';', encoding='utf-8')
+    df_final = append_to_submission(df_final, predictions)
+    df_final.to_csv('submission.csv', index=False, sep=';', encoding='utf-8')
 
+    return df_final
+    
+def create_empty_submission() -> pd.DataFrame:
+    """
+    Converte um numpy array de previsões de 28 dias em um DataFrame formatado para submissão.
+    Args:
+        submissions (torch.tensor): Array de previsões com shape (num_predictions, 28).
+    Returns:
+        pd.DataFrame: DataFrame formatado com colunas ['semana', 'pdv', 'produto', 'quantidade'].
+    """
     df_final = pd.DataFrame(columns=['semana', 'pdv', 'produto', 'quantidade'])
     df_final = df_final.astype({
         'semana': 'int32',
@@ -38,6 +52,10 @@ def forecast_to_output(predictions) -> pd.DataFrame:
         'produto': 'int32',
         'quantidade': 'int32'
     })
+    
+    return df_final
+
+def append_to_submission(df_final: pd.DataFrame, predictions) -> pd.DataFrame:
     
     for key, value in predictions.items():
         product_id, store_id = key
@@ -57,6 +75,4 @@ def forecast_to_output(predictions) -> pd.DataFrame:
         })
         # Append to df_final
         df_final = pd.concat([df_final, df_temp], ignore_index=True)
-
-    df_final.to_csv('submission.csv', index=False, sep=';', encoding='utf-8')
     return df_final
